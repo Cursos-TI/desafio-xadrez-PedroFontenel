@@ -31,6 +31,7 @@ int main() {
     int casas;         // Número de casas para movimentar
     char direcao;      // Direção escolhida pelo usuário (um caractere)
     int opcao;         // Opção escolhida no menu
+    int movimentocompleto = 1; // Flag para controlar o movimento em "L"
     char continuar = 'S';    // Flag para controlar o loop
 
     while (continuar == 'S' || continuar == 's') { // Loop principal do programa
@@ -40,11 +41,11 @@ int main() {
     printf("1 - Torre\n"); // Move-se em linha reta horizontalmente ou verticalmente. 
     printf("2 - Bispo\n"); // Move-se na diagonal.
     printf("3 - Rainha\n"); // Move-se em todas as direções.
+    printf("4 - Peão\n"); // Move-se uma casa por vez.
+    printf("5 - Cavalo\n"); // Move duas casas em uma direção (horizontal ou vertical) e depois uma casa perpendicularmente, formando um "L".
 
     /* CODIGO NAO ESTA PRONTO
-
-    printf("4 - Peão\n");
-    printf("5 - Cavalo\n");
+    
     printf("6 - Rei\n");
 
     */
@@ -178,7 +179,52 @@ int main() {
 
         break;
 
-    case 5:
+    case 5:// CAVALO
+
+        printf("\nVocê escolheu o CAVALO.\n");
+
+        // Pergunta ao usuário quantos movimentos deseja realizar
+        printf("Quantos movimentos completos você deseja realizar? ");
+        scanf("%d", &movimentocompleto);
+
+        // Pergunta ao usuário qual direção deseja
+        printf("Escolha a direção:\n");
+        printf("D - CIMA, CIMA, DIREITA\n");
+        printf("E - CIMA, CIMA, ESQUERDA\n");
+        printf("C - BAIXO, BAIXO, DIREITA\n");
+        printf("B - BAIXO, BAIXO, ESQUERDA\n");
+        printf("Digite a letra correspondente: ");
+        scanf(" %c", &direcao);
+
+        printf("Movimento do cavalo:\n");
+
+        while (movimentocompleto > 0)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                if (direcao == 'D' || direcao == 'd' || direcao == 'E' || direcao == 'e')
+            {
+                printf("cima\n");
+            } else if (direcao == 'C' || direcao == 'c' || direcao == 'B' || direcao == 'b')
+            {
+                printf("baixo\n");
+            }
+        }
+
+        // Movimento horizontal (direita ou esquerda)
+        if (direcao == 'D' || direcao == 'd' || direcao == 'C' || direcao == 'c')
+        {
+            printf("direita\n");
+        } else if (direcao == 'E' || direcao == 'e' || direcao == 'B' || direcao == 'b')
+        {
+            printf("esquerda\n");
+        }
+
+        movimentocompleto--; // Decrementa o número total de movimentos completos
+
+    }
+        break;
+        
     case 6:
     default: // 
 
