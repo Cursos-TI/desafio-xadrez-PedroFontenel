@@ -3,10 +3,9 @@
 // Desafio de Xadrez - MateCheck
 // Este código inicial serve como base para o desenvolvimento do sistema de movimentação das peças de xadrez.
 // O objetivo é utilizar estruturas de repetição e funções para determinar os limites de movimentação dentro do jogo.
-
-int main() {
-    // Nível Novato - Movimentação das Peças
-    // Sugestão: Declare variáveis constantes para representar o número de casas que cada peça pode se mover.
+// Nível Novato - Movimentação das Peças
+    
+// Sugestão: Declare variáveis constantes para representar o número de casas que cada peça pode se mover.
 
     // Implementação de Movimentação do Bispo
     // Sugestão: Utilize uma estrutura de repetição para simular a movimentação do Bispo em diagonal.
@@ -28,34 +27,188 @@ int main() {
     // Sugestão: Implemente a movimentação do Cavalo utilizando loops com variáveis múltiplas e condições avançadas.
     // Inclua o uso de continue e break dentro dos loops.
 
-    int casas;         // Número de casas para movimentar
-    char direcao;      // Direção escolhida pelo usuário (um caractere)
-    int opcao;         // Opção escolhida no menu
-    int movimentocompleto = 1; // Flag para controlar o movimento em "L"
-    char continuar = 'S';    // Flag para controlar o loop
+// Função recursiva para mover a Torre
+void moverTorre(int casas, char direcao, int atual)
+{
+    if (atual > casas)
+    {
+        return;
+    }
 
-    while (continuar == 'S' || continuar == 's') { // Loop principal do programa
+    printf("Casa %d: ", atual);
+
+    switch (direcao)
+    {
+    case 'D':
+    case 'd':
+        printf("Movendo para a direita\n");
+        break;
+    case 'E':
+    case 'e':
+        printf("Movendo para a esquerda\n");
+        break;
+    case 'C':
+    case 'c':
+        printf("Movendo para cima\n");
+        break;
+    case 'B':
+    case 'b':
+        printf("Movendo para baixo\n");
+        break;
+    default:
+        printf("Direção inválida! Programa encerrado.\n");
+        return;
+    }
+
+    moverTorre(casas, direcao, atual + 1);
+}
+
+// Função recursiva para mover o bispo usando loops aninhados
+void moverBispo(int casas, char direcao, int x, int y, int atual)
+{
+    if (atual > casas)
+    {
+        return;
+    }
+
+    printf("Casa %d: ", atual);
+
+    switch (direcao)
+    {
+    case 'D':
+    case 'd': // Diagonal superior direita
+        for (int i = 0; i < 1; i++)
+        { // Loop externo para o movimento vertical
+            for (int j = 0; j < 1; j++)
+            { // Loop interno para o movimento horizontal
+                x++;
+                y++;
+            }
+        }
+        printf("Movendo para diagonal superior direita\n");
+        break;
+
+    case 'E':
+    case 'e': // Diagonal superior esquerda
+        for (int i = 0; i < 1; i++)
+        {
+            for (int j = 0; j < 1; j++)
+            {
+                x--;
+                y++;
+            }
+        }
+        printf("Movendo para diagonal superior esquerda\n");
+        break;
+
+    case 'I':
+    case 'i': // Diagonal inferior esquerda
+        for (int i = 0; i < 1; i++)
+        {
+            for (int j = 0; j < 1; j++)
+            {
+                x--;
+                y--;
+            }
+        }
+        printf("Movendo para diagonal inferior esquerda\n");
+        break;
+
+    case 'S':
+    case 's': // Diagonal inferior direita
+        for (int i = 0; i < 1; i++)
+        {
+            for (int j = 0; j < 1; j++)
+            {
+                x++;
+                y--;
+            }
+        }
+        printf("Movendo para diagonal inferior direita\n");
+        break;
+
+    default:
+        printf("Direção inválida! Programa encerrado.\n");
+        return;
+    }
+
+    moverBispo(casas, direcao, x, y, atual + 1);
+}
+
+// Função recursiva para mover a Rainha
+void moverRainha(int casas, char direcao, int atual)
+{
+    if (atual > casas)
+    {
+        return;
+    }
+
+    printf("Casa %d: ", atual);
+
+    switch (direcao)
+    {
+    case 'D':
+    case 'd':
+        printf("Movendo para a direita\n");
+        break;
+    case 'E':
+    case 'e':
+        printf("Movendo para a esquerda\n");
+        break;
+    case 'C':
+    case 'c':
+        printf("Movendo para cima\n");
+        break;
+    case 'B':
+    case 'b':
+        printf("Movendo para baixo\n");
+        break;
+    case 'S':
+    case 's':
+        printf("Movendo para diagonal superior direita\n");
+        break;
+    case 'I':
+    case 'i':
+        printf("Movendo para diagonal superior esquerda\n");
+        break;
+    case 'M':
+    case 'm':
+        printf("Movendo para diagonal inferior esquerda\n");
+        break;
+    case 'N':
+    case 'n':
+        printf("Movendo para diagonal inferior direita\n");
+        break;
+
+    default:
+        printf("Direção inválida! Programa encerrado.\n");
+        return;
+    }
+
+    moverRainha(casas, direcao, atual + 1);
+}
+
+int main()
+{
+    int casas, x, y, movimentos = 1; // Número de casas para movimentar
+    char direcao;                   // Direção escolhida pelo usuário (um caractere)
+    int opcao;                     // Opção escolhida no menu
 
     printf("***XADREZ***\n");
     printf("Escolha uma peça para mover:\n");
-    printf("1 - Torre\n"); // Move-se em linha reta horizontalmente ou verticalmente. 
-    printf("2 - Bispo\n"); // Move-se na diagonal.
-    printf("3 - Rainha\n"); // Move-se em todas as direções.
-    printf("4 - Peão\n"); // Move-se uma casa por vez.
-    printf("5 - Cavalo\n"); // Move duas casas em uma direção (horizontal ou vertical) e depois uma casa perpendicularmente, formando um "L".
+    printf("1 - Torre\n");        // Move-se em linha reta horizontalmente ou verticalmente.
+    printf("2 - Bispo\n");       // Move-se na diagonal.
+    printf("3 - Rainha\n");     // Move-se em todas as direções.
+    printf("4 - Peão\n");      // Move-se uma casa por vez.
+    printf("5 - Cavalo\n");   // Move duas casas em uma direção (horizontal ou vertical) e depois uma casa perpendicularmente, formando um "L".
+    printf("6 - Rei\n");     // Move-se em todas as direçoes uma casa por vez.
 
-    /* CODIGO NAO ESTA PRONTO
-    
-    printf("6 - Rei\n");
-
-    */
-
-    printf("Digite o número correspondente à peça: ");
+    printf("\nDigite o número correspondente à peça: ");
     scanf("%d", &opcao);
 
     switch (opcao)
     {
-    case 1: //Torre
+    case 1: // TORRE
 
         printf("\nVocê escolheu a TORRE.\n");
         printf("Digite a quantidade de casas que a peça irá andar (no máximo 8): ");
@@ -73,58 +226,34 @@ int main() {
         scanf(" %c", &direcao);
 
         printf("Movimento da torre:\n");
+        moverTorre(casas, direcao, 1);
 
-        for (int i = 1; i <= casas; i++)
-
-        if (direcao == 'D' || direcao == 'd') {
-            printf("Casa %d: Movendo para a direita\n", i);
-        } else if (direcao == 'E' || direcao == 'e') {
-            printf("Casa %d: Movendo para a esquerda\n", i);
-        } else if (direcao == 'C' || direcao == 'c') {
-            printf("Casa %d: Movendo para cima\n", i);
-        } else if (direcao == 'B' || direcao == 'b') {
-            printf("Casa %d: Movendo para baixo\n", i);
-        } else {
-            printf("Direção inválida! Programa encerrado.\n");
-        }
         break;
 
-    case 2: //Bispo
+    case 2: // BISPO
 
         printf("\nVocê escolheu o BISPO.\n");
         printf("Digite a quantidade de casas que a peça irá andar (no máximo 8): ");
         scanf("%d", &casas);
 
-        if (casas < 1 || casas > 8) 
+        if (casas < 1 || casas > 8)
         {
             printf("Número de casas inválido! Deve ser entre 1 e 8.\n");
             return 0;
         }
 
         printf("Escolha a direção:\n");
-        printf("D - CIMA, DIREITA\nE - CIMA, ESQUERDA\nC - BAIXO, DIREITA\nB - BAIXO, ESQUERDA\n");
+        printf("D - Diagonal superior direita\nE - Diagonal superior esquerda\n");
+        printf("I - Diagonal inferior esquerda\nS - Diagonal inferior direita\n");
         printf("Digite a letra correspondente: ");
         scanf(" %c", &direcao);
 
         printf("Movimento do bispo:\n");
+        moverBispo(casas, direcao, x, y, 1);
 
-        for (int i = 1; i <= casas; i++)
-
-        if (direcao == 'D' || direcao == 'd')
-        {
-            printf("Casa %d: Movendo para cima e para direita\n", i);
-        } else if (direcao == 'E' || direcao == 'e') {
-            printf("Casa %d: Movendo para cima e para esquerda\n", i);
-        } else if (direcao == 'C' || direcao == 'c') {
-            printf("Casa %d: Movendo para baixo e para direita\n", i);
-        } else if (direcao == 'B' || direcao == 'b') {
-            printf("Casa %d: Movendo para baixo e para esquerda\n", i);
-        } else {
-            printf("Direção inválida! Programa encerrado.\n");
-        }
         break;
 
-    case 3: //Rainha
+    case 3: // RAINHA
 
         printf("\nVocê escolheu a RAINHA.\n");
         printf("Digite a quantidade de casas que a peça irá andar (no máximo 8): ");
@@ -137,107 +266,117 @@ int main() {
         }
 
         printf("Escolha a direção:\n");
-        printf("D - DIREITA\nE - ESQUERDA\nC - CIMA\nB - BAIXO\nA - CIMA, DIREITA\nS - CIMA, ESQUERDA\nF - BAIXO, DIREITA\nG - BAIXO, ESQUERDA\n");
+        printf("D - DIREITA\nE - ESQUERDA\nC - CIMA\nB - BAIXO\nS - DIAGONAL SUPERIOR DIREITA\nI - DIAGONAL SUPERIOR ESQUERDA\nM - DIAGONAL INFERIOR ESQUERDA\nN - DIAGONAL INFERIOR DIREITA\n");
         printf("Digite a letra correspondente: ");
         scanf(" %c", &direcao);
 
-        printf("Movimento da Rainha:\n");
+        printf("Movimento da rainha:\n");
+        moverRainha(casas, direcao, 1);
 
-        for (int i = 1; i <= casas; i++)
-
-        if (direcao == 'D' || direcao == 'd') {
-           printf("Casa %d: Movendo para a direita\n", i);
-        } else if (direcao == 'E' || direcao == 'e') {
-           printf("Casa %d: Movendo para a esquerda\n", i);
-        } else if (direcao == 'C' || direcao == 'c') {
-           printf("Casa %d: Movendo para cima\n", i);
-        } else if (direcao == 'B' || direcao == 'b') {
-           printf("Casa %d: Movendo para baixo\n", i);
-        } else if (direcao == 'A' || direcao == 'a') {
-            printf("Casa %d: Movendo para CIMA, DIREITA\n", i);
-        } else if (direcao == 'S' || direcao == 's') {
-            printf("Casa %d: Movendo para cima, esquerda\n", i);
-        } else if (direcao == 'F' || direcao == 'f') {
-            printf("Casa %d: Movendo para baixo, direita\n", i);
-        } else if (direcao == 'G' || direcao == 'g') {
-            printf("Casa %d: Movendo para baixo, esquerda\n", i);
-        } else {
-           printf("Direção inválida! Programa encerrado.\n");
-        } 
         break;
 
-    case 4: //Peão
+    case 4: // PEÃO
 
-        do 
+        do
         {
-            printf("\nDigite a quantidade de casas (1): ");
+            printf("\nDigite a quantidade de casas (no máximo 1): ");
             scanf("%d", &casas);
-            
+
         } while (casas < 1 || casas > 1); // Validação do valor
 
-          printf("O peão irá andar %d casa para cima.\n", casas);
+        printf("O peão irá andar %d casa para cima.\n", casas);
 
         break;
 
-    case 5:// CAVALO
+    case 5: // CAVALO
 
-        printf("\nVocê escolheu o CAVALO.\n");
+        printf("\nMovimentos do cavalo:\n");
 
-        // Pergunta ao usuário quantos movimentos deseja realizar
-        printf("Quantos movimentos completos você deseja realizar? ");
-        scanf("%d", &movimentocompleto);
-
-        // Pergunta ao usuário qual direção deseja
-        printf("Escolha a direção:\n");
-        printf("D - CIMA, CIMA, DIREITA\n");
-        printf("E - CIMA, CIMA, ESQUERDA\n");
-        printf("C - BAIXO, BAIXO, DIREITA\n");
-        printf("B - BAIXO, BAIXO, ESQUERDA\n");
-        printf("Digite a letra correspondente: ");
-        scanf(" %c", &direcao);
-
-        printf("Movimento do cavalo:\n");
-
-        while (movimentocompleto > 0)
+        while (movimentos > 0)
         {
             for (int i = 0; i < 2; i++)
-            {
-                if (direcao == 'D' || direcao == 'd' || direcao == 'E' || direcao == 'e')
-            {
-                printf("cima\n");
-            } else if (direcao == 'C' || direcao == 'c' || direcao == 'B' || direcao == 'b')
-            {
-                printf("baixo\n");
+            { // Duas casas para cima
+                printf("Cima\n");
             }
+
+            printf("Direita\n"); // Uma casa para a direita
+
+            printf("\n"); // Linha em branco para separar a saída de cada movimento completo
+
+            movimentos--; // Decrementa o número de movimentos restantes
         }
 
-        // Movimento horizontal (direita ou esquerda)
-        if (direcao == 'D' || direcao == 'd' || direcao == 'C' || direcao == 'c')
-        {
-            printf("direita\n");
-        } else if (direcao == 'E' || direcao == 'e' || direcao == 'B' || direcao == 'b')
-        {
-            printf("esquerda\n");
-        }
-
-        movimentocompleto--; // Decrementa o número total de movimentos completos
-
-    }
         break;
-        
-    case 6:
-    default: // 
+
+    case 6: // REI
+
+        // Validação do movimento do Rei (sempre 1 casa)
+        do
+        {
+            printf("\nDigite a quantidade de casas (no máximo 1): ");
+            scanf("%d", &casas);
+        } while (casas < 1 || casas > 1);
+
+        // Escolha da direção
+        printf("Agora, vamos escolher a direção:\n");
+        printf("D - DIREITA\nE - ESQUERDA\nC - CIMA\nB - BAIXO\nS - DIAGONAL SUPERIOR DIREITA\nI - DIAGONAL SUPERIOR ESQUERDA\nM - DIAGONAL INFERIOR ESQUERDA\nN - DIAGONAL INFERIOR DIREITA\n");
+        printf("Digite a letra correspondente: ");
+        scanf(" %s", &direcao);
+
+        // Movimentação do Rei
+        printf("O rei irá andar 1 casa para ");
+
+        if (direcao == 'C' || direcao == 'c')
+        {
+            printf("cima.\n");
+        }
+        else if (direcao == 'B' || direcao == 'b')
+        {
+            printf("baixo.\n");
+        }
+        else if (direcao == 'D' || direcao == 'd')
+        {
+            printf("direita.\n");
+        }
+        else if (direcao == 'E' || direcao == 'e')
+        {
+            printf("esquerda.\n");
+        }
+        else if (direcao == 'S' || direcao == 's')
+        {
+            printf("diagonal superior direita.\n");
+        }
+        else if (direcao == 'I' || direcao == 'i')
+        {
+            printf("diagonal superior esquerda.\n");
+        } 
+        else if (direcao == 'S' || direcao == 's')
+        {
+            printf("diagonal inferior esquerda.\n");
+        }
+        else if (direcao == 'N' || direcao == 'n')
+        {
+            printf("diagonal inferior direita.\n");
+        } 
+        else if (direcao == 'M' || direcao == 'm')
+        {
+            printf("diagonal inferior esquerda.\n");
+        }
+        else
+        {
+            printf("Direção inválida! Programa encerrado.\n");
+        }
+
+        break;
+
+    default:
 
         printf("Lamento nao conseguir entender sua ação!!!");
 
         break;
     }
 
-    printf("\nDeseja continuar? (S/N): ");
-    scanf(" %c", &continuar);
-}
-
-    printf("Programa encerrado.\n");
-
+    printf("\nPrograma encerrado.\n");
     return 0;
 }
+
